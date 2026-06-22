@@ -1,0 +1,47 @@
+module stimuli( );
+    reg clk,rst; 
+    reg [1:0] coin;
+    wire dispense;
+    wire [1:0] change;
+    
+    Vending_Machine dut (.clk(clk),.rst(rst),.coin(coin),.dispense(dispense),.change(change));
+    
+    always #5 clk = ~clk;
+    
+    initial
+    begin
+        clk = 0; rst = 1; coin = 2'b00;
+        #10 rst = 0;
+    
+        // Inserting Rs 10+5 
+        #10 coin = 2'b10;
+        #10 coin = 2'b01;
+        #10 coin = 2'b00;
+    
+        // Inserting Rs 5+5+5 
+        #10 coin = 2'b01;
+        #10 coin = 2'b01;
+        #10 coin = 2'b01;
+        #10 coin = 2'b00;
+        
+        // Inserting Rs 5+0 
+        #10 coin = 2'b01;
+        #10 coin = 2'b00;
+    
+        // Inserting Rs 10+0 
+        #10 coin = 2'b10;
+        #10 coin = 2'b00;
+        
+        // Inserting Rs 10+10 
+        #10 coin = 2'b10;
+        #10 coin = 2'b10;
+        #10 coin = 2'b00;
+        
+        // Inserting Rs 5+5+0 
+        #10 coin = 2'b01;
+        #10 coin = 2'b01;
+        #10 coin = 2'b00;
+        
+        #50 $finish;
+    end
+endmodule
